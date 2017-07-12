@@ -1,6 +1,4 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,9 +10,10 @@ public class FileIOSample {
 
     public static void main(final String args[]) {
 
+        readAndOutputText();
+
         SimpleClass simpleClass = new SimpleClass(2, "Ryan Haveson");
         System.out.printf("Initial value is: %s\n", simpleClass);
-
 
         Path path = Paths.get("simpleClass.ser");
 
@@ -59,5 +58,25 @@ public class FileIOSample {
         }
 
         return simpleClass;
+    }
+
+    static void readAndOutputText() {
+        Path path = Paths.get("resources\\queue.txt");
+        try (InputStream in = Files.newInputStream(path);
+             BufferedReader reader = new BufferedReader( new InputStreamReader(in))) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                // ENUM_NAME(int_id, "rest_of_string"),
+                String parts[] = line.split("\\s");
+                System.out.print(parts[0] + "(" + parts[1] + ", \"");
+                for( int i = 2; i < parts.length - 1; i++) {
+                    if(i != 2) {System.out.print(" ");}
+                    System.out.print(parts[i]);
+                }
+                System.out.println("\"),");
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }
     }
 }
