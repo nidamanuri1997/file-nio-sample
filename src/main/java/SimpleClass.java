@@ -12,7 +12,7 @@ public class SimpleClass implements Serializable {
     int myInt;
     String myString;
 
-        // This is how to mark a field such that it won't be serialized
+        // This is how to mark a field such tat it won't be serialized
     transient int internalDontSerialize;
 
     public SimpleClass(int myInt, String myString) {
